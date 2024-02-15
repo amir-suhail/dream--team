@@ -1,7 +1,26 @@
 body {
   background: #0c1117;
+  color: #fff;
 }
 
-.app-header {
-  background: #026d48
+.app-header, .app-footer {
+  background: #f3ec43;
+  color: #0c1117;
+}
+
+.app-footer {
+  width: 100%;
+}
+
+.player-count {
+  padding-right: 0;
+  padding-top: 5px;
+}
+
+.create-team-btn {
+  padding-left: 0;
+}
+
+.player-count-p {
+  margin: 0;
 }
