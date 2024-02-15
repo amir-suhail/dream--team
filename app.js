@@ -24,8 +24,6 @@ function run()
   if (playerData.values) {
     let playerList = createPlayerList(playerData.values);
     createPlayerListElement(playerList);
-    //let finalTeam = createTeam(playerList)
-    //console.log('teams : ', finalTeam);
   } else {
     console.log('error');
   }
@@ -138,7 +136,7 @@ function createPlayerList (playerData) {
               name: player[1] ? `${player[0]} (${player[1]})` : player[0],
               primaryPosition: player[2] || 'ANY',
               secondaryPosition: player[3],
-              level: player[4]
+              level: player[4] || 'Beginner'
             };
             playerList.push(playerObj);
         }
@@ -237,7 +235,7 @@ function assignPlayer (player, index) {
       } else if (!teams[thisTeam]['CM']) {
         setTeamMember(player, thisTeam, 'CM');
       }
-    } else if(forList.indexOf(player.primaryPosition) > -1 || (player.secondaryPosition && forList.indexOf(player.secondaryPosition) > -1)) {
+    } else {
       if (!teams[thisTeam]['LW']) {
         setTeamMember(player, thisTeam, 'LW');
       } else if (!teams[thisTeam]['RW']) {
