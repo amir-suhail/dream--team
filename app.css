@@ -1,6 +1,7 @@
 body {
   background: #0c1117;
   color: #fff;
+  padding-bottom: 100px;
 }
 
 .app-header, .app-footer {
