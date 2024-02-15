@@ -7,13 +7,14 @@ const points = {
 };
 
 const defList = [
-  'CD','LD','RD'
+  'CB','LB','RB'
 ];
 
 const forList = [
   'CM','CF','LW','RW'
 ];
 var selectedPlayers = [];
+var maxTeamCount = 0;
 
 run();
 function run()
@@ -33,6 +34,7 @@ function run()
 
 $(document).ready(function() {
   $('#create-team-btn').click(function() {
+      maxTeamCount = parseInt(selectedPlayers.length/2);
       var teams = createTeam(selectedPlayers); // Call the createTeam function with selectedPlayers
       // Hide the player list
       $('#player-legend').hide();
@@ -98,8 +100,8 @@ function createPlayerListElement (players) {
               selectedPlayers.push(player);
           } else {
               // Remove player from selectedPlayers list
-              selectedPlayers = selectedPlayers.filter(function(name) {
-                  return name !== player.name;
+              selectedPlayers = selectedPlayers.filter(function(obj) {
+                  return obj.name !== player.name;
               });
           }
           console.log('selectedPlayers : ', selectedPlayers);
@@ -134,7 +136,7 @@ function createPlayerList (playerData) {
         if (index !== 0) {
             let playerObj = {
               name: player[1] ? `${player[0]} (${player[1]})` : player[0],
-              primaryPosition: player[2],
+              primaryPosition: player[2] || 'ANY',
               secondaryPosition: player[3],
               level: player[4]
             };
@@ -148,9 +150,9 @@ function createPlayerList (playerData) {
 function createTeam (playerList) {
   teams = [
     {
-      CD: null,
-      LD: null,
-      RD: null,
+      CB: null,
+      LB: null,
+      RB: null,
       CM: null,
       CF: null,
       LW: null,
@@ -159,9 +161,9 @@ function createTeam (playerList) {
       playerCount: 0
     },
     {
-      CD: null,
-      LD: null,
-      RD: null,
+      CB: null,
+      LB: null,
+      RB: null,
       CM: null,
       CF: null,
       LW: null,
@@ -199,11 +201,11 @@ function createTeam (playerList) {
 function assignPlayer (player, index) {
     let thisTeam, otherTeam;
 
-    if (teams[0].playerCount < teams[1].playerCount && teams[0].playerCount < 7) {
+    if (teams[0].playerCount < teams[1].playerCount && teams[0].playerCount < maxTeamCount) {
       thisTeam = 0;
       otherTeam = 1;
 
-    } else  if (teams[0].playerCount == teams[1].playerCount && teams[0].Strength < teams[1].Strength && teams[0].playerCount < 7) {
+    } else  if (teams[0].playerCount == teams[1].playerCount && teams[0].Strength < teams[1].Strength && teams[0].playerCount < maxTeamCount) {
       thisTeam = 0;
       otherTeam = 1;
     } else {
@@ -220,16 +222,16 @@ function assignPlayer (player, index) {
     } else if(player.secondaryPosition && !teams[otherTeam][player.secondaryPosition]) {
       setTeamMember(player, otherTeam, player.secondaryPosition);
     } else if(defList.indexOf(player.primaryPosition) > -1 || (player.secondaryPosition && defList.indexOf(player.secondaryPosition) > -1)) {
-      if (!teams[thisTeam]['LD']) {
-        setTeamMember(player, thisTeam, 'LD');
-      } else if (!teams[thisTeam]['RD']) {
-        setTeamMember(player, thisTeam, 'RD');
+      if (!teams[thisTeam]['LB']) {
+        setTeamMember(player, thisTeam, 'LB');
+      } else if (!teams[thisTeam]['RB']) {
+        setTeamMember(player, thisTeam, 'RB');
       } else if (!teams[thisTeam]['LW']) {
         setTeamMember(player, thisTeam, 'LW');
       } else if (!teams[thisTeam]['RW']) {
         setTeamMember(player, thisTeam, 'RW');
-      } else if (!teams[thisTeam]['CD']) {
-        setTeamMember(player, thisTeam, 'CD');
+      } else if (!teams[thisTeam]['CB']) {
+        setTeamMember(player, thisTeam, 'CB');
       } else if (!teams[thisTeam]['CF']) {
         setTeamMember(player, thisTeam, 'CF');
       } else if (!teams[thisTeam]['CM']) {
@@ -244,12 +246,12 @@ function assignPlayer (player, index) {
         setTeamMember(player, thisTeam, 'CF');
       } else if (!teams[thisTeam]['CM']) {
         setTeamMember(player, thisTeam, 'CM');
-      } else if (!teams[thisTeam]['LD']) {
-        setTeamMember(player, thisTeam, 'LD');
-      } else if (!teams[thisTeam]['RD']) {
-        setTeamMember(player, thisTeam, 'RD');
-      } else if (!teams[thisTeam]['CD']) {
-        setTeamMember(player, thisTeam, 'CD');
+      } else if (!teams[thisTeam]['LB']) {
+        setTeamMember(player, thisTeam, 'LB');
+      } else if (!teams[thisTeam]['RB']) {
+        setTeamMember(player, thisTeam, 'RB');
+      } else if (!teams[thisTeam]['CB']) {
+        setTeamMember(player, thisTeam, 'CB');
       }
     }
 }
